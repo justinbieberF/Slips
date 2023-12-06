@@ -1,253 +1,146 @@
-# Slips
+slip 1// Write a Java Program to implement I/O Decorator for converting uppercase letters to
+lower case letters.
 
-Q1) Write a Python program to prepare Scatter Plot for Iris Dataset?
-Output: -
-import numpy as np
-import pandas as pd
+Main.java
+
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Usage: java Main <filename>");
+            System.exit(1);
+        }
+
+        String filename = args[0];
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String lowercaseLine = line.toLowerCase();
+                System.out.println(lowercaseLine);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+// Write a Python program to prepare Scatter Plot for Iris Dataset.
+
 import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
 
-data=pd.read_csv(r"C:\Users\Admin\Desktop\csv_files\iris.csv")
-print(data)
+# Load the Iris dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
 
-x=data["SepalLength"]
-y=data["SepalWidth"]
-print(x)
-print(y)
+# Create a scatter plot for Sepal Length vs Sepal Width
+plt.figure(figsize=(8, 6))
+plt.scatter(X[y == 0, 0], X[y == 0, 1], label='Setosa', c='b', marker='o')
+plt.scatter(X[y == 1, 0], X[y == 1, 1], label='Versicolor', c='g', marker='s')
+plt.scatter(X[y == 2, 0], X[y == 2, 1], label='Virginica', c='r', marker='^')
 
-plt.scatter(x,y,c="red")
-plt.title("IRIS CSV")
-plt.xlabel("SepalLength")
-plt.ylabel("SepalWidth")
+# Set labels and title
+plt.xlabel('Sepal Length (cm)')
+plt.ylabel('Sepal Width (cm)')
+plt.title('Iris Dataset - Sepal Length vs Sepal Width')
+
+# Add legend
+plt.legend(loc='best')
+
+# Show the plot
 plt.show()
 
-Q.2) Write a python program to find all null values in a given dataset and remove them.
-Output: -
-import pandas as pd
-import numpy as np
-
-data=pd.read_csv(r"C:\Users\Admin\Desktop\csv_files\employees.csv")
-print(data)
-
-print(data.isnull())
-
-print(data.notnull())
-
-data1=data.dropna(axis=0,how="any")
-print(data1)
-
-data["m1"]=data["m1"].replace(np.NaN,data["m1"].mean())
-data["m2"]=data["m2"].replace(np.NaN,data["m2"].mean())
-data["m3"]=data["m3"].replace(np.NaN,data["m3"].mean())
-print(data)
-Q.3) Write a python program to make Categorical values in numeric format for a given dataset
-Output: -
-import pandas as pd
-import numpy as np
-
-data=pd.read_csv(r"C:\Users\Admin\Desktop\csv_files\iris.csv")
-print(data)
-x=data.iloc[:,3].values
-print(x)
-from sklearn.preprocessing import LabelEncoder
-
-le=LabelEncoder()
-x1=le.fit_transform(x)
-print(x1)
-from sklearn.preprocessing import OneHotEncoder
-ohe=OneHotEncoder()
-xn=ohe.fit_transform(x).toarray()
-print(xn)
 
 
-Q.4) Write a python program to Implement Simple Linear Regression for predicting house price.
-Output: -
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error
-
-data=pd.read_csv(r"C:\Users\Admin\Desktop\csv_files\houseprice.csv")
-print(data)
-x=data[["bedrooms","sqft_living"]]
-y=data.price
-
-print(x)
-print(y)
-
-xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.2)
-print(xtrain)
-print(xtest)
-print(ytrain)
-print(ytest)
-
-lr=LinearRegression()
-lr.fit(xtrain,ytrain)
-
-print(lr.intercept_)
-print(lr.coef_)
-
-print(lr.predict([[2,1000]]))
-
-ypred=lr.predict(xtest)
-cm=mean_absolute_error(ytest,ypred)
-print(cm)
-
-Q.5 Write a python program to implement Multiple Linear Regression for given dataset
-Output: -
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error
-
-data=pd.read_csv(r"C:\Users\Admin\Desktop\csv_files\houseprice.csv")
-print(data)
-x=data[["bedrooms","sqft_living"]]
-y=data.price
-
-print(x)
-print(y)
-
-xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.2)
-print(xtrain)
-print(xtest)
-print(ytrain)
-print(ytest)
-
-lr=LinearRegression()
-lr.fit(xtrain,ytrain)
-
-print(lr.intercept_)
-print(lr.coef_)
-
-print(lr.predict([[2,1000]]))
-
-ypred=lr.predict(xtest)
-cm=mean_absolute_error(ytest,ypred)
-print(cm)
-
-Q.6) Write a python program to implement Polynomial Linear Regression for given dataset
-Output: -
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-  
-dataset = pd.read_csv(r"C:\Users\Admin\Desktop\csv_files\Position_Salaries.csv")
-dataset
- 
-X = dataset.iloc[:,1:2].values  
-y = dataset.iloc[:,2].values
- 
-# fitting the linear regression model
-from sklearn.linear_model import LinearRegression
-lin_reg = LinearRegression()
-lin_reg.fit(X,y)
- 
-# visualising the linear regression model
-plt.scatter(X,y, color='red')
-plt.plot(X, lin_reg.predict(X),color='blue')
-plt.title("Truth or Bluff(Linear)")
-plt.xlabel('Position level')
-plt.ylabel('Salary')
-plt.show()
- 
-# polynomial regression model
-from sklearn.preprocessing import PolynomialFeatures
-poly_reg = PolynomialFeatures(degree=2)
-X_poly = poly_reg.fit_transform(X)
-  
-X_poly     # prints X_poly
- 
-lin_reg2 = LinearRegression()
-lin_reg2.fit(X_poly,y)
- 
- 
-# visualising polynomial regression
-from sklearn.preprocessing import PolynomialFeatures
-poly_reg = PolynomialFeatures(degree=4)
-X_poly = poly_reg.fit_transform(X)
-lin_reg2 = LinearRegression()
-lin_reg2.fit(X_poly,y)
-  
-X_grid = np.arange(min(X),max(X),0.1)
-X_grid = X_grid.reshape(len(X_grid),1) 
-plt.scatter(X,y, color='red') 
-  
-plt.plot(X_grid, lin_reg2.predict(poly_reg.fit_transform(X_grid)),color='blue') 
-  
-plt.title("Truth or Bluff(Polynomial)")
-plt.xlabel('Position level')
-plt.ylabel('Salary')
-plt.show()
-
-Q.7) Write a python program to implement Naive Bayes.
-Output: -
-# importing libraries  
-import numpy as nm
-import matplotlib.pyplot as mtp
-import pandas as pd
-
-#importing datasets  
-data_set=pd.read_csv(r'C:\Users\Admin\Desktop\CSVfile\suvdata.csv')
-#Extracting Independent and dependent Variable  
-x=data_set.iloc[:,[2,3]].values
-y=data_set.iloc[:,4].values
-print(x)
-# Splitting the dataset into training and test set.  
-from sklearn.model_selection import train_test_split
-x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.25,random_state=0)
-#feature Scaling  
-from sklearn.preprocessing import StandardScaler
-st_x= StandardScaler()
-x_train=st_x.fit_transform(x_train)
-x_test=st_x.transform(x_test)
-
-from sklearn.svm import SVC # "Support vector classifier"  
-classifier =SVC(kernel='linear',random_state=0)
-classifier.fit(x_train,y_train)
-#Predicting the test set result  
-y_pred=classifier.predict(x_test)
-print(y_pred)
-#Creating the Confusion matrix  
-from sklearn.metrics import confusion_matrix  
-cm= confusion_matrix(y_test, y_pred)  
-print(cm)
-print(classifier.score(x_test,y_test))
-
-Q8. Write a python program to implement Multiple Linear Regression for given dataset.
-Output: -
-#Predicting car price MLR
-#importing libraries  
-import numpy as nm  
-import matplotlib.pyplot as mtp  
-import pandas as pd
-#importing datasets
-df= pd.read_csv(r"C:\Users\Admin\Desktop\csv_files\CarPriceMultiR.csv")
-x= df.iloc[:,9:13].values  # these are the 
-y= df.iloc[:,25].values  #this is price colm
-# Splitting the dataset into training and test set.  
-from sklearn.model_selection import train_test_split  
-x_train, x_test, y_train, y_test= train_test_split(x, y, test_size= 0.2, random_state=0)
-#Fitting the MLR model to the training set:  
-from sklearn.linear_model import LinearRegression  
-regressor= LinearRegression()  
-regressor.fit(x_train, y_train)
-#Predicting all the Test set result;  
-y_pred= regressor.predict(x_test)
-print(x)
-#To predict the result of first row in xtest
-regressor.predict([x_test[0]])
-#To predict with features in x
-regressor.predict([[88.6, 168.8,  64.1,  48.8]])
-#output is array([13153.12031111]
-regressor.predict([[105.8, 192.7,71.4,55.9]])
-regressor.predict([[109,188,68,55]])
-regressor.predict([[109,189,69,56]])
 
 
-Q.9. Write a python program to implement Decision Tree whether or not to play Tennis.
-Output: -
 
+
+
+
+// Create an HTML form that contain the Student Registration details and write a JavaScript to validate Student first and last name as it should not contain other than alphabets and age should be between 18 to 50.
+1st program-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Details</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Employee Details Form</h2>
+
+<form id="employeeForm" onsubmit="return validateForm()">
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob" required>
+    <span id="dobError" class="error"></span><br>
+
+    <label for="joiningDate">Joining Date:</label>
+    <input type="date" id="joiningDate" name="joiningDate" required>
+    <span id="joiningDateError" class="error"></span><br>
+
+    <label for="salary">Salary:</label>
+    <input type="number" id="salary" name="salary" required>
+    <span id="salaryError" class="error"></span><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    function validateForm() {
+        // Get form inputs
+        var dob = new Date(document.getElementById('dob').value);
+        var joiningDate = new Date(document.getElementById('joiningDate').value);
+        var salary = parseFloat(document.getElementById('salary').value);
+
+        // Validate Date of Birth
+        if (isNaN(dob.getTime())) {
+            document.getElementById('dobError').innerHTML = 'Invalid Date of Birth';
+            return false;
+        } else {
+            document.getElementById('dobError').innerHTML = '';
+        }
+
+        // Validate Joining Date
+        if (isNaN(joiningDate.getTime())) {
+            document.getElementById('joiningDateError').innerHTML = 'Invalid Joining Date';
+            return false;
+        } else {
+            document.getElementById('joiningDateError').innerHTML = '';
+        }
+
+        // Validate Salary (positive number)
+        if (isNaN(salary) || salary <= 0) {
+            document.getElementById('salaryError').innerHTML = 'Salary should be a positive number';
+            return false;
+        } else {
+            document.getElementById('salaryError').innerHTML = '';
+        }
+
+        // If all validations pass, the form is valid
+        return true;
+    }
+</script>
+
+</body>
+</html>
