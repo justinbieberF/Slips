@@ -294,3 +294,171 @@ a JavaScript to validate DOB, Joining Date, and Salary.
 </body>
 </html>
 
+slip 3// Write a JAVA Program to implement built-in support (java.util.Observable) Weather
+station with members temperature, humidity, pressure and methods
+mesurmentsChanged(), setMesurment(), getTemperature(), getHumidity(),
+getPressure(
+
+
+
+import java.util.Observable;
+import java.util.Observer;
+
+class WeatherData extends Observable {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+
+    public void measurementsChanged() {
+        setChanged();
+        notifyObservers();
+    }
+
+    public void setMeasurements(float temperature, float humidity, float pressure) {
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.pressure = pressure;
+        measurementsChanged();
+    }
+
+    public float getTemperature() {
+        return temperature;
+    }
+
+    public float getHumidity() {
+        return humidity;
+    }
+
+    public float getPressure() {
+        return pressure;
+    }
+}
+
+class Display implements Observer {
+    private WeatherData weatherData;
+
+    public Display(WeatherData weatherData) {
+        this.weatherData = weatherData;
+        weatherData.addObserver(this);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof WeatherData) {
+            WeatherData weatherData = (WeatherData) o;
+            display(weatherData.getTemperature(), weatherData.getHumidity(), weatherData.getPressure());
+        }
+    }
+
+    public void display(float temperature, float humidity, float pressure) {
+        System.out.println("Temperature: " + temperature + "°C");
+        System.out.println("Humidity: " + humidity + "%");
+        System.out.println("Pressure: " + pressure + " hPa");
+    }
+}
+
+public class Question3 {
+    public static void main(String[] args) {
+        WeatherData weatherData = new WeatherData();
+
+        Display display = new Display(weatherData);
+
+        // Simulate weather data changes
+        weatherData.setMeasurements(25.0f, 60.0f, 1013.2f);
+    }
+}
+
+
+
+
+
+
+
+// Write a python program to make Categorical values in numeric format for a given 
+dataset
+
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+
+# Create a sample DataFrame (replace this with your dataset)
+data = {'Category': ['A', 'B', 'C', 'A', 'B', 'C'],
+        'Value': [10, 20, 30, 40, 50, 60]}
+
+df = pd.DataFrame(data)
+
+# Step 1: Initialize the LabelEncoder
+label_encoder = LabelEncoder()
+
+# Step 2: Apply Label Encoding to the 'Category' column
+df['Category_encoded'] = label_encoder.fit_transform(df['Category'])
+
+# Display the DataFrame with encoded values
+print("Original DataFrame:")
+print(df)
+
+# Step 3: Inverse Transform (if needed)
+df['Category_decoded'] = label_encoder.inverse_transform(df['Category_encoded'])
+
+# Display the DataFrame with the original and decoded values
+print("\nDataFrame with decoded values:")
+print(df)
+
+
+
+
+
+
+// Create an HTML form for Login and write a JavaScript to validate email ID 
+using Regular Expression. 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Login Form</h2>
+
+<form id="loginForm" onsubmit="return validateForm()">
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" required>
+    <span id="emailError" class="error"></span><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
+
+    <input type="submit" value="Login">
+</form>
+
+<script>
+    function validateForm() {
+        // Get form inputs
+        var email = document.getElementById('email').value;
+
+        // Regular expression for a simple email validation
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Validate email using regular expression
+        if (!emailRegex.test(email)) {
+            document.getElementById('emailError').innerHTML = 'Invalid email format';
+            return false;
+        } else {
+            document.getElementById('emailError').innerHTML = '';
+        }
+
+        // If email validation passes, the form is valid
+        return true;
+    }
+</script>
+
+</body>
+</html>
