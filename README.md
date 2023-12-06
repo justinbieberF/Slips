@@ -144,3 +144,153 @@ plt.show()
 
 </body>
 </html>
+
+
+slip 2// Write a Java Program to implement Singleton pattern for multithreading.
+
+
+public class Question2 {
+public static void main(String ar[]) {
+Test1 t = new Test1();
+Test1 t2 = new Test1();
+Test1 t3 = new Test1();
+Thread tt = new Thread(t);
+Thread tt2 = new Thread(t2);
+Thread tt3 = new Thread(t3);
+Thread tt4 = new Thread(t);
+Thread tt5 = new Thread(t);
+tt.start();
+tt2.start();
+tt3.start();
+tt4.start();
+tt5.start();
+}
+}
+final class Test1 implements Runnable {
+@Override
+public void run() {
+for (int i = 0; i < 5; i++) {
+System.out.println(Thread.currentThread().getName() + " : " +
+Single.getInstance().hashCode());
+}
+}
+}
+class Single {
+private final static Single sing = new Single();
+private Single() {
+}
+public static Single getInstance() {
+return sing;
+}
+}
+
+
+
+
+
+
+// Write a python program to find all null values in a given dataset and remove them 
+
+import pandas as pd
+
+# Sample dataset
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', None, 'Eve'],
+    'Age': [25, 30, None, 28, 22],
+    'City': [None, 'New York', 'Los Angeles', 'Chicago', 'San Francisco']
+}
+
+# Create a DataFrame from the sample data
+df = pd.DataFrame(data)
+
+# Find and display the rows with null values
+rows_with_null = df[df.isnull().any(axis=1)]
+print("Rows with null values:")
+print(rows_with_null)
+
+# Remove rows with null values
+df_cleaned = df.dropna()
+
+# Display the cleaned DataFrame
+print("\nDataFrame after removing null values:")
+print(df_cleaned)
+
+
+
+
+
+
+slip2// Create an HTML form that contain the Employee Registration details and write 
+a JavaScript to validate DOB, Joining Date, and Salary. 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Details</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Employee Details Form</h2>
+
+<form id="employeeForm" onsubmit="return validateForm()">
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob" required>
+    <span id="dobError" class="error"></span><br>
+
+    <label for="joiningDate">Joining Date:</label>
+    <input type="date" id="joiningDate" name="joiningDate" required>
+    <span id="joiningDateError" class="error"></span><br>
+
+    <label for="salary">Salary:</label>
+    <input type="number" id="salary" name="salary" required>
+    <span id="salaryError" class="error"></span><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    function validateForm() {
+        // Get form inputs
+        var dob = new Date(document.getElementById('dob').value);
+        var joiningDate = new Date(document.getElementById('joiningDate').value);
+        var salary = parseFloat(document.getElementById('salary').value);
+
+        // Validate Date of Birth
+        if (isNaN(dob.getTime())) {
+            document.getElementById('dobError').innerHTML = 'Invalid Date of Birth';
+            return false;
+        } else {
+            document.getElementById('dobError').innerHTML = '';
+        }
+
+        // Validate Joining Date
+        if (isNaN(joiningDate.getTime())) {
+            document.getElementById('joiningDateError').innerHTML = 'Invalid Joining Date';
+            return false;
+        } else {
+            document.getElementById('joiningDateError').innerHTML = '';
+        }
+
+        // Validate Salary (positive number)
+        if (isNaN(salary) || salary <= 0) {
+            document.getElementById('salaryError').innerHTML = 'Salary should be a positive number';
+            return false;
+        } else {
+            document.getElementById('salaryError').innerHTML = '';
+        }
+
+        // If all validations pass, the form is valid
+        return true;
+    }
+</script>
+
+</body>
+</html>
+
