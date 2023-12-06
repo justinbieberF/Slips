@@ -634,3 +634,397 @@ const message = "Hello World!";
 const upperCaseMessage = message.toUpperCase();
 
 console.log(upperCaseMessage);
+
+
+slip 5// Write a Java Program to implement Adapter pattern for Enumeration iterator
+
+import java.util.Enumeration;
+import java.util.Iterator;
+
+// Target interface (Iterator)
+interface IteratorAdapter<T> extends Iterator<T> {
+}
+
+// Adaptee interface (Enumeration)
+class EnumerationAdapter<T> implements Enumeration<T> {
+    private IteratorAdapter<T> iterator;
+
+    public EnumerationAdapter(IteratorAdapter<T> iterator) {
+        this.iterator = iterator;
+    }
+
+    @Override
+    public boolean hasMoreElements() {
+        return iterator.hasNext();
+    }
+
+    @Override
+    public T nextElement() {
+        return iterator.next();
+    }
+}
+
+// Client class that uses Iterator interface
+class Client {
+    public void printValues(Iterator<String> iterator) {
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+    }
+}
+
+public class AdapterPatternExample {
+    public static void main(String[] args) {
+        // Create an Enumeration
+        Enumeration<String> enumeration = new VectorAdapter<>(new Vector<String>().elements());
+
+        // Adapt Enumeration to Iterator using the Adapter
+        IteratorAdapter<String> iteratorAdapter = new EnumerationToIteratorAdapter<>(enumeration);
+
+        // Client code can now use Iterator interface
+        Client client = new Client();
+        client.printValues(iteratorAdapter);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// Write a python program to implement Multiple Linear Regression for given dataset.
+
+
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Sample dataset (replace this with your dataset)
+data = {
+    'Size': [1400, 1600, 1700, 1875, 1100, 1550, 2350, 2450, 1425, 1700],
+    'Bedrooms': [3, 3, 2, 3, 2, 3, 4, 4, 3, 2],
+    'Location': [1, 2, 1, 3, 2, 1, 3, 2, 1, 2],
+    'Price': [245000, 312000, 279000, 308000, 199000, 219000, 405000, 324000, 319000, 255000]
+}
+
+df = pd.DataFrame(data)
+
+# Step 1: Split the dataset into independent variables (features) and the dependent variable (target)
+X = df[['Size', 'Bedrooms', 'Location']]
+y = df['Price']
+
+# Step 2: Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Step 3: Create a Linear Regression model and fit it to the training data
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Step 4: Make predictions on the test data
+y_pred = model.predict(X_test)
+
+# Step 5: Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print("Mean Squared Error:", mse)
+print("R-squared:", r2)
+
+# Step 6: Make predictions for new data
+new_data = np.array([[1500, 3, 2]])  # New house features: Size, Bedrooms, Location
+predicted_price = model.predict(new_data)
+
+print("Predicted Price for a New House:", predicted_price[0])
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+
+# Sample dataset (replace this with your dataset)
+data = {
+    'Size': [1400, 1600, 1700, 1875, 1100, 1550, 2350, 2450, 1425, 1700],
+    'Bedrooms': [3, 3, 2, 3, 2, 3, 4, 4, 3, 2],
+    'Location': [1, 2, 1, 3, 2, 1, 3, 2, 1, 2],
+    'Price': [245000, 312000, 279000, 308000, 199000, 219000, 405000, 324000, 319000, 255000]
+}
+
+df = pd.DataFrame(data)
+
+# Step 1: Split the dataset into independent variables (features) and the dependent variable (target)
+X = df[['Size', 'Bedrooms', 'Location']]
+y = df['Price']
+
+# Step 2: Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Step 3: Create a Random Forest Regressor model and fit it to the training data
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Step 4: Make predictions on the test data
+y_pred = model.predict(X_test)
+
+# Step 5: Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+mae = mean_absolute_error(y_test, y_pred)
+
+print("Mean Squared Error:", mse)
+print("R-squared:", r2)
+print("Mean Absolute Error:", mae)
+
+# Step 6: Make predictions for a new house (example: Size=1500, Bedrooms=3, Location=2)
+new_data = np.array([[1500, 3, 2]])  # New house features: Size, Bedrooms, Location
+predicted_price = model.predict(new_data)
+
+print("Predicted Price for a New House:", predicted_price[0])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Using nodejs create a web page to read two file names from user and append contents 
+of first file into second file.
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const fs = require('fs');
+
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
+
+app.post('/appendFiles', (req, res) => {
+    const { firstFileName, secondFileName } = req.body;
+
+    // Read the contents of the first file
+    fs.readFile(firstFileName, 'utf8', (err, data) => {
+        if (err) {
+            return res.send('Error reading the first file.');
+        }
+
+        // Append the contents to the second file
+        fs.appendFile(secondFileName, data, (err) => {
+            if (err) {
+                return res.send('Error appending to the second file.');
+            }
+
+            res.send('Contents appended successfully!');
+        });
+    });
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
+Create a file named index.html in the same directory with the following content:
+html
+Copy code
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Appender</title>
+</head>
+<body>
+    <h1>File Appender</h1>
+    <form action="/appendFiles" method="post">
+        <label for="firstFileName">Enter the name of the first file:</label>
+        <input type="text" id="firstFileName" name="firstFileName" required>
+        <br>
+        <label for="secondFileName">Enter the name of the second file:</label>
+        <input type="text" id="secondFileName" name="secondFileName" required>
+        <br>
+        <button type="submit">Append Files</button>
+    </form>
+</body>
+</html>
+
+
+slip 6// Write a Java Program to implement command pattern to test Remote Control
+
+interface Command {
+public void execute();
+}
+class Light {
+public void on(){
+System.out.println("Light is on");
+}
+public void off()
+{
+System.out.println("Light is off");
+}
+}
+class LightOnCommand implements Command {
+Light l1;
+public LightOnCommand(Light a) {
+this.l1 = a;
+}
+public void execute() {
+l1.on();
+}
+}
+class LightOffCommand implements Command {
+Light l1;
+public LightOffCommand(Light a) {
+this.l1 = a;
+}
+public void execute() {
+l1.off();
+}
+}
+class SimpleRemoteControl {
+Command slot;
+public SimpleRemoteControl() {}
+public void setCommand(Command command) {
+slot = command;
+}
+public void buttonWasPressed() {
+slot.execute();
+}
+}
+public class Question5 {
+public static void main(String[] args) {
+SimpleRemoteControl r1 = new SimpleRemoteControl();
+Light l1 = new Light();
+LightOnCommand lo = new LightOnCommand(l1);
+r1.setCommand(lo);
+r1.buttonWasPressed();
+LightOffCommand lO = new LightOffCommand(l1);
+r1.setCommand(lO);
+r1.buttonWasPressed();
+}
+}
+
+
+
+
+
+// Write a python program to implement Polynomial Linear Regression for given dataset
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+
+# Sample dataset (replace this with your dataset)
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([2, 8, 18, 32, 50])
+
+# Reshape the data
+x = x.reshape(-1, 1)
+y = y.reshape(-1, 1)
+
+# Step 1: Create PolynomialFeatures to transform the features
+poly = PolynomialFeatures(degree=2)  # You can adjust the degree as needed
+
+# Transform the features to include polynomial terms
+x_poly = poly.fit_transform(x)
+
+# Step 2: Create a Linear Regression model
+model = LinearRegression()
+
+# Step 3: Fit the model to the transformed features
+model.fit(x_poly, y)
+
+# Step 4: Predict new values using the polynomial model
+x_new = np.array([[6]])  # Value to predict for
+x_new_poly = poly.transform(x_new)
+y_new = model.predict(x_new_poly)
+
+# Step 5: Plot the data and the polynomial regression line
+plt.scatter(x, y, color='blue', label='Actual Data')
+plt.plot(x, model.predict(x_poly), color='red', label='Polynomial Regression Line')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.title('Polynomial Linear Regression')
+plt.legend()
+plt.show()
+
+# Step 6: Display the predicted value
+print(f"Predicted value for x={x_new[0][0]} is y={y_new[0][0]:.2f}")
+
+
+
+
+
+//Create a Node.js file that opens the requested file and returns the content to the client. If anything goes wrong, throw a 404 error
+Here's an example using Express:
+
+1. Install the necessary module:
+
+```bash
+npm init -y
+npm install express
+```
+
+2. Create a file named `fileServer.js`:
+
+```javascript
+// fileServer.js
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
+
+const app = express();
+const port = 3000;
+
+app.get('/getFile/:filename', (req, res) => {
+  const requestedFile = req.params.filename;
+  const filePath = path.join(__dirname, requestedFile);
+
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      if (err.code === 'ENOENT') {
+        // File not found
+        res.status(404).send('File not found');
+      } else {
+        // Other error
+        res.status(500).send('Internal Server Error');
+      }
+    } else {
+      // Send file content to the client
+      res.send(data);
+    }
+  });
+});
+
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}/`);
+});
+```
+
+3. Run the server:
+
+```bash
+node fileServer.js
+```
+
+4. Now you can access files by visiting URLs like http://localhost:3000/getFile/yourfilename.txt in your browser or using tools like curl or Postman.
+
+Note: This example uses Express for simplicity. In a production environment, you may want to add more error handling, security measures, and consider serving static files differently.
+
