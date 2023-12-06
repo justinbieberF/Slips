@@ -462,3 +462,175 @@ using Regular Expression.
 
 </body>
 </html>
+
+
+slip 4// Write a Java Program to implement Factory method for Pizza Store with createPizza(),
+orederPizza(), prepare(), Bake(), cut(), box(). Use this to create variety of pizza’s like
+NyStyleCheesePizza, ChicagoStyleCheesePizza etc
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+// Product: Pizza
+abstract class Pizza {
+    String name;
+
+    abstract void prepare();
+
+    void bake() {
+        System.out.println("Baking " + name + " pizza");
+    }
+
+    void cut() {
+        System.out.println("Cutting " + name + " pizza");
+    }
+
+    void box() {
+        System.out.println("Boxing " + name + " pizza");
+    }
+}
+
+// Concrete Product: NYStyleCheesePizza
+class NYStyleCheesePizza extends Pizza {
+    NYStyleCheesePizza() {
+        name = "NY Style Cheese Pizza";
+    }
+
+    @Override
+    void prepare() {
+        System.out.println("Preparing ingredients for NY Style Cheese Pizza");
+    }
+}
+
+// Concrete Product: ChicagoStyleCheesePizza
+class ChicagoStyleCheesePizza extends Pizza {
+    ChicagoStyleCheesePizza() {
+        name = "Chicago Style Cheese Pizza";
+    }
+
+    @Override
+    void prepare() {
+        System.out.println("Preparing ingredients for Chicago Style Cheese Pizza");
+    }
+}
+
+// Creator: PizzaStore
+abstract class PizzaStore {
+    public Pizza orderPizza(String type) {
+        Pizza pizza = createPizza(type);
+
+        pizza.prepare();
+        pizza.bake();
+        pizza.cut();
+        pizza.box();
+
+        return pizza;
+    }
+
+    protected abstract Pizza createPizza(String type);
+}
+
+// Concrete Creator: NYPizzaStore
+class NYPizzaStore extends PizzaStore {
+    @Override
+    protected Pizza createPizza(String type) {
+        if (type.equalsIgnoreCase("cheese")) {
+            return new NYStyleCheesePizza();
+        }
+        // Add more pizza types here...
+        return null;
+    }
+}
+
+// Concrete Creator: ChicagoPizzaStore
+class ChicagoPizzaStore extends PizzaStore {
+    @Override
+    protected Pizza createPizza(String type) {
+        if (type.equalsIgnoreCase("cheese")) {
+            return new ChicagoStyleCheesePizza();
+        }
+        // Add more pizza types here...
+        return null;
+    }
+}
+
+public class Question4 {
+    public static void main(String[] args) {
+        PizzaStore nyStore = new NYPizzaStore();
+        PizzaStore chicagoStore = new ChicagoPizzaStore();
+
+        Pizza pizza1 = nyStore.orderPizza("cheese");
+        System.out.println("Ethan ordered a " + pizza1.name + "\n");
+
+        Pizza pizza2 = chicagoStore.orderPizza("cheese");
+        System.out.println("Joel ordered a " + pizza2.name + "\n");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+// Write a python program to Implement Simple Linear Regression for predicting house 
+price.
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# Sample data (replace this with your dataset)
+house_size = np.array([1400, 1600, 1700, 1875, 1100, 1550, 2350, 2450, 1425, 1700])
+house_price = np.array([245000, 312000, 279000, 308000, 199000, 219000, 405000, 324000, 319000, 255000])
+
+# Reshape data
+house_size = house_size.reshape(-1, 1)
+
+# Step 1: Create a Linear Regression model
+model = LinearRegression()
+
+# Step 2: Fit the model to the data
+model.fit(house_size, house_price)
+
+# Step 3: Make predictions
+house_size_to_predict = np.array([1500, 1800, 2000]).reshape(-1, 1)
+predicted_prices = model.predict(house_size_to_predict)
+
+# Step 4: Plot the data and the regression line
+plt.scatter(house_size, house_price, color='blue', label='Actual Prices')
+plt.plot(house_size, model.predict(house_size), color='red', label='Regression Line')
+plt.xlabel('House Size (sqft)')
+plt.ylabel('Price ($)')
+plt.title('House Price Prediction')
+plt.legend()
+plt.show()
+
+# Step 5: Display the predictions
+print("Predicted Prices for House Sizes:")
+for i in range(len(house_size_to_predict)):
+ print(f"House Size: {house_size_to_predict[i][0]} sqft, Predicted Price: ${predicted_prices[i]:.2f}")
+
+
+
+
+
+
+
+
+
+
+
+
+// Create a Node.js file that will convert the output "Hello World!" into upper-case letters.
+
+// convertToUpper.js
+
+const message = "Hello World!";
+const upperCaseMessage = message.toUpperCase();
+
+console.log(upperCaseMessage);
