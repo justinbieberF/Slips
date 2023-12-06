@@ -1028,3 +1028,158 @@ node fileServer.js
 
 Note: This example uses Express for simplicity. In a production environment, you may want to add more error handling, security measures, and consider serving static files differently.
 
+
+
+slip 7//Write a Java Program to implement undo command to test Ceiling fan.
+
+interface Command {
+public void execute();
+}
+class CeilingFan {
+public void on(){
+System.out.println("Ceiling Fan is on");
+}
+public void off()
+{
+System.out.println("Ceiling Fan is off");
+}
+}
+class CeilingFanOnCommand implements Command {
+CeilingFan c;
+public CeilingFanOnCommand(CeilingFan l) {
+this.c = l;
+}
+public void execute() {
+c.on();
+}
+}
+class CeilingFanOffCommand implements Command {
+CeilingFan c;
+public CeilingFanOffCommand(CeilingFan l) {
+this.c = l;
+}
+public void execute() {
+c.off();
+}
+}
+class SimpleRemoteControl {
+Command slot;
+public SimpleRemoteControl() {}
+public void setCommand(Command command) {
+slot = command;
+}
+public void buttonWasPressed() {
+slot.execute();
+}
+}
+public class Question6 {
+public static void main(String[] args) {
+SimpleRemoteControl remote = new SimpleRemoteControl();
+CeilingFan ceilingFan=new CeilingFan();
+CeilingFanOnCommand ceilingFanOn =new CeilingFanOnCommand(ceilingFan);
+remote.setCommand(ceilingFanOn);
+remote.buttonWasPressed();
+CeilingFanOffCommand ceilingFanOff =new CeilingFanOffCommand(ceilingFan);
+remote.setCommand(ceilingFanOff);
+remote.buttonWasPressed();
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+// Write a python program to implement Naive Bayes. 
+
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn import datasets
+
+# Step 1: Load or create a dataset (I'm using the Iris dataset as an example)
+iris = datasets.load_iris()
+X = iris.data  # Features
+y = iris.target  # Target variable
+
+# Step 2: Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Step 3: Create a Gaussian Naive Bayes classifier
+model = GaussianNB()
+
+# Step 4: Train the model on the training data
+model.fit(X_train, y_train)
+
+# Step 5: Make predictions on the testing data
+y_pred = model.predict(X_test)
+
+# Step 6: Evaluate the model
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+accuracy = accuracy_score(y_test, y_pred)
+confusion = confusion_matrix(y_test, y_pred)
+report = classification_report(y_test, y_pred, target_names=iris.target_names)
+
+print("Accuracy:", accuracy)
+print("\nConfusion Matrix:\n", confusion)
+print("\nClassification Report:\n", report)
+
+
+
+
+
+
+
+
+
+
+//Create a Node.js file that writes an HTML form, with an upload field.
+
+Sure thing! Here's a simple Node.js script using the `fs` module to create an HTML file with a form containing an upload field:
+
+```javascript
+const fs = require('fs');
+
+const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Upload Form</title>
+</head>
+<body>
+  <h1>File Upload Form</h1>
+  <form action="/upload" method="post" enctype="multipart/form-data">
+    <label for="file">Choose a file:</label>
+    <input type="file" name="file" id="file" required>
+    <br>
+    <input type="submit" value="Upload">
+  </form>
+</body>
+</html>
+`;
+
+fs.writeFile('uploadForm.html', htmlContent, (err) => {
+  if (err) {
+    console.error('Error creating HTML file:', err);
+  } else {
+    console.log('HTML file created successfully!');
+  }
+});
+```
+
+Save this code in a file, let's say `createForm.js`. Run the script using Node.js:
+
+```bash
+node createForm.js
+```
+
+This will generate an HTML file named `uploadForm.html` in the same directory as your script. The HTML file contains a form with an upload field.
+r
