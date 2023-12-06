@@ -1183,3 +1183,416 @@ node createForm.js
 
 This will generate an HTML file named `uploadForm.html` in the same directory as your script. The HTML file contains a form with an upload field.
 r
+
+
+slip 13//Write a Java Program to implement an Adapter design pattern in mobile charger. Define
+two classes – Volt (to measure volts) and Socket (producing constant volts of 120V).
+Build an adapter that can produce 3 volts, 12 volts and default 120 volts. Implements
+Adapter pattern using Class Adapter
+
+class Volt {
+private int volts;
+public Volt(int v) { this.volts=v; }
+public int getVolts() { return volts; }
+public void setVolts(int volts) { this.volts = volts; }
+}
+class Socket {
+public Volt getVolt(){ return new Volt(120); }
+}
+interface SocketAdapter {
+public Volt get120Volt();
+public Volt get12Volt();
+public Volt get3Volt();
+}
+class SocketClassAdapterImpl extends Socket implements SocketAdapter {
+@Override
+public Volt get120Volt() {
+return getVolt();
+}
+@Override
+public Volt get12Volt() {
+Volt v = getVolt();
+return convertVolt(v,10);
+}
+@Override
+
+public Volt get3Volt() {
+Volt v = getVolt();
+return convertVolt(v,40);
+}
+private Volt convertVolt(Volt v, int i) {
+return new Volt(v.getVolts()/i);
+}
+}
+class SocketObjectAdapterImpl implements SocketAdapter {
+// using composition for adapter pattern
+private Socket sock = new Socket();
+@Override
+public Volt get120Volt() {
+return sock.getVolt();
+}
+@Override
+public Volt get12Volt() {
+Volt v = sock.getVolt();
+return convertVolt(v,10);
+}
+@Override
+public Volt get3Volt() {
+Volt v = sock.getVolt();
+return convertVolt(v,40);
+}
+private Volt convertVolt(Volt v, int i) {
+return new Volt(v.getVolts()/i);
+}
+}
+public class Main {
+public static void main(String[] args) {
+testClassAdapter();
+testObjectAdapter();
+}
+private static void testObjectAdapter() {
+SocketAdapter sockAdapter = new SocketObjectAdapterImpl();
+Volt v3 = getVolt(sockAdapter,3);
+Volt v12 = getVolt(sockAdapter,12);
+Volt v120 = getVolt(sockAdapter,120);
+System.out.println("v3 volts using Object Adapter="+v3.getVolts());
+System.out.println("v12 volts using Object Adapter="+v12.getVolts());
+System.out.println("v120 volts using Object Adapter="+v120.getVolts());
+}
+private static void testClassAdapter() {
+SocketAdapter sockAdapter = new SocketClassAdapterImpl();
+Volt v3 = getVolt(sockAdapter,3);
+Volt v12 = getVolt(sockAdapter,12);
+Volt v120 = getVolt(sockAdapter,120);
+System.out.println("v3 volts using Class Adapter="+v3.getVolts());
+System.out.println("v12 volts using Class Adapter="+v12.getVolts());
+System.out.println("v120 volts using Class Adapter="+v120.getVolts());
+}
+private static Volt getVolt(SocketAdapter sockAdapter, int i) {
+switch (i){
+case 3: return sockAdapter.get3Volt();
+case 12: return sockAdapter.get12Volt();
+case 120: return sockAdapter.get120Volt();
+default: return sockAdapter.get120Volt();
+}
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Write a Python program to prepare Scatter Plot for Iris Dataset
+
+#install   pip install seaborn matplotlib
+
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn import datasets
+
+# Load the Iris dataset
+iris = datasets.load_iris()
+data = iris.data
+target = iris.target
+feature_names = iris.feature_names
+
+# Create a DataFrame from the dataset
+import pandas as pd
+iris_df = pd.DataFrame(data, columns=feature_names)
+iris_df['target'] = target
+
+# Set the style of the plot
+sns.set(style="whitegrid")
+
+# Create a pair plot to visualize the relationships between features
+sns.pairplot(iris_df, hue='target', markers=["o", "s", "D"], palette="Set1")
+
+# Display the plot
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Using node js create a User Login System
+
+Install required packages:
+
+npm init -y
+npm install express body-parser express-session
+npm install express
+npm install express-session
+
+
+Code – 
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+
+const app = express();
+const port = 3000;
+
+// Use middleware for parsing JSON and form data
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Use session middleware
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+}));
+
+// Fake in-memory database
+const users = [
+  { id: 1, username: 'user1', password: 'password1' },
+  { id: 2, username: 'user2', password: 'password2' },
+];
+
+// Middleware to check if the user is logged in
+const requireLogin = (req, res, next) => {
+  if (!req.session.userId) {
+    res.redirect('/login');
+  } else {
+    next();
+  }
+};
+
+// Home route
+app.get('/', requireLogin, (req, res) => {
+  res.send(`Welcome, user${req.session.userId}! <a href="/logout">Logout</a>`);
+});
+
+// Login route
+app.get('/login', (req, res) => {
+  res.send(`
+    <form method="post" action="/login">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required><br>
+      <button type="submit">Login</button>
+    </form>
+  `);
+});
+
+// Logout route
+app.get('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/login');
+  });
+});
+
+// Login POST route
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  const user = users.find(u => u.username === username && u.password === password);
+
+  if (user) {
+    req.session.userId = user.id;
+    res.redirect('/');
+  } else {
+    res.send('Invalid username or password. <a href="/login">Try again</a>');
+  }
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
+
+
+// Write a Java Program to implement Facade Design Pattern for HomeTheater
+
+// Subsystem components
+
+class Amplifier {
+    void on() {
+        System.out.println("Amplifier is on");
+    }
+
+    void off() {
+        System.out.println("Amplifier is off");
+    }
+}
+
+class DVDPlayer {
+    void on() {
+        System.out.println("DVD Player is on");
+    }
+
+    void off() {
+        System.out.println("DVD Player is off");
+    }
+
+    void play(String movie) {
+        System.out.println("Playing DVD: " + movie);
+    }
+}
+
+class Projector {
+    void on() {
+        System.out.println("Projector is on");
+    }
+
+    void off() {
+        System.out.println("Projector is off");
+    }
+}
+
+class Lights {
+    void dim(int level) {
+        System.out.println("Lights dimmed to level " + level);
+    }
+}
+
+// Home Theater Facade
+
+class HomeTheaterFacade {
+    private Amplifier amplifier;
+    private DVDPlayer dvdPlayer;
+    private Projector projector;
+    private Lights lights;
+
+    public HomeTheaterFacade(Amplifier amplifier, DVDPlayer dvdPlayer, Projector projector, Lights lights) {
+        this.amplifier = amplifier;
+        this.dvdPlayer = dvdPlayer;
+        this.projector = projector;
+        this.lights = lights;
+    }
+
+    void watchMovie(String movie) {
+        System.out.println("Get ready to watch a movie...");
+        lights.dim(10);
+        amplifier.on();
+        dvdPlayer.on();
+        projector.on();
+        dvdPlayer.play(movie);
+    }
+
+    void endMovie() {
+        System.out.println("Shutting down the movie...");
+        lights.dim(100);
+        dvdPlayer.off();
+        projector.off();
+        amplifier.off();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create subsystem components
+        Amplifier amp = new Amplifier();
+        DVDPlayer dvd = new DVDPlayer();
+        Projector projector = new Projector();
+        Lights lights = new Lights();
+
+        // Create the Home Theater Facade
+        HomeTheaterFacade homeTheater = new HomeTheaterFacade(amp, dvd, projector, lights);
+
+        // Watch a movie using the Facade
+        homeTheater.watchMovie("Inception");
+
+        // End the movie using the Facade
+        homeTheater.endMovie();
+    }
+}
+
+
+
+slip 15// Write a python program to make Categorical values in numeric format for a given 
+dataset
+
+import pandas as pd
+
+# Create a sample dataset with categorical values
+data = {'Category': ['A', 'B', 'A', 'C', 'B', 'C']}
+df = pd.DataFrame(data)
+
+# Option 1: Label Encoding
+label_encoding = df.copy()
+label_encoding['Category'] = label_encoding['Category'].astype('category').cat.codes
+
+# Option 2: One-Hot Encoding
+one_hot_encoding = pd.get_dummies(df, columns=['Category'], prefix=['Category'])
+
+# Display the original, label-encoded, and one-hot-encoded dataframes
+print("Original Dataset:")
+print(df)
+
+print("\nLabel Encoded Dataset:")
+print(label_encoding)
+
+print("\nOne-Hot Encoded Dataset:")
+print(one_hot_encoding)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Write node js script to build Your Own Node.js Module. Use require (‘http’) module is a built-in Node module that invokes the functionality of the HTTP library to create a local server. Also use the export statement to make functions in your module available externally. Create a new text file to contain the functions in your module called, “modules.js” and add this function to return today’s date and time.
+
+
+Module.js
+
+// modules.js
+
+// Function to return today's date and time
+exports.getCurrentDateTime = function () {
+  const today = new Date();
+  const date = today.toLocaleDateString();
+  const time = today.toLocaleTimeString();
+  return `${date} ${time}`;
+};
+
+
+app.js 
+// app.js
+
+// Require your custom module
+const myModule = require('./modules');
+
+// Use the exported function from your module
+const currentDateTime = myModule.getCurrentDateTime();
+
+// Display the result
+console.log(`Current Date and Time: ${currentDateTime}`);
+
+
+
+
+
+
